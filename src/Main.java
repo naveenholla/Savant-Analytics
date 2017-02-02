@@ -5,8 +5,6 @@ import java.util.Calendar;
 
 public class Main {
 
-
-    
     public static void main(String[] args) throws IOException {
 	// write your code here
         Stock tesla = YahooFinance.get("TSLA", true);
