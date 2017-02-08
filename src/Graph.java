@@ -14,32 +14,23 @@ public class Graph extends ApplicationFrame
     public Graph( String applicationTitle , String chartTitle )
     {
         super(applicationTitle);
-        JFreeChart lineChart = ChartFactory.createLineChart(
+
+        JFreeChart VWAPlineChart = ChartFactory.createLineChart(
                 chartTitle,
                 "Time","VWAP",
-                createDataset(),
+                createVWAPDataset(),
                 PlotOrientation.VERTICAL,
                 true,true,false);
 
-        JFreeChart lineChart2 = ChartFactory.createLineChart(chartTitle, "Time", "Price", createDataset2(), PlotOrientation.VERTICAL, true, true, false);
-
-
-        ChartPanel chartPanel = new ChartPanel( lineChart );
-        ChartPanel chartPanel1 = new ChartPanel( lineChart2 );
+        ChartPanel chartPanel = new ChartPanel( VWAPlineChart );
 
         chartPanel.setMinimumDrawHeight(799);
         chartPanel.setMaximumDrawHeight(804);
         chartPanel.setPreferredSize( new java.awt.Dimension( 1000 , 900 ) );
         setContentPane( chartPanel );
-
-        chartPanel1.setMinimumDrawHeight(799);
-        chartPanel1.setMaximumDrawHeight(804);
-        chartPanel1.setPreferredSize( new java.awt.Dimension( 1000 , 900 ) );
-        setContentPane( chartPanel1 );
-
     }
 
-    private DefaultCategoryDataset createDataset( )
+    private DefaultCategoryDataset createVWAPDataset( )
     {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
         int c = 0;
@@ -47,19 +38,13 @@ public class Graph extends ApplicationFrame
             dataset.addValue(i, "VWAP", Main.time.get(c).toString());
             c++;
         }
-        //dataset.addValue( 300 , "schools" , "2014" );
-        return dataset;
-    }
 
-    private DefaultCategoryDataset createDataset2( )
-    {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
-        int c = 0;
+        int d = 0;
         for(Double i: Main.prices) {
-            dataset.addValue(i, "Price", Main.time.get(c).toString());
-            c++;
+            dataset.addValue(i, "Price", Main.time.get(d).toString());
+            d++;
         }
-        //dataset.addValue( 300 , "schools" , "2014" );
+
         return dataset;
     }
 }
