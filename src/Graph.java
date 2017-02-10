@@ -8,6 +8,10 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Graph extends ApplicationFrame
 {
@@ -35,13 +39,23 @@ public class Graph extends ApplicationFrame
         DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
         int c = 0;
         for(Double i: Main.VWPAPs) {
-            dataset.addValue(i, "VWAP", Main.time.get(c).toString());
+
+            LocalDateTime dateTime = LocalDateTime.ofEpochSecond(Long.parseLong(Main.time.get(c).toString()), 0, ZoneOffset.UTC);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm", Locale.ENGLISH);
+            String formattedDate = dateTime.format(formatter);
+
+            dataset.addValue(i, "VWAP", formattedDate);
             c++;
         }
 
         int d = 0;
         for(Double i: Main.prices) {
-            dataset.addValue(i, "Price", Main.time.get(d).toString());
+
+            LocalDateTime dateTime = LocalDateTime.ofEpochSecond(Long.parseLong(Main.time.get(d).toString()), 0, ZoneOffset.UTC);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm", Locale.ENGLISH);
+            String formattedDate = dateTime.format(formatter);
+
+            dataset.addValue(i, "Price", formattedDate);
             d++;
         }
 
