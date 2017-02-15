@@ -21,7 +21,7 @@ public class Stock {
     public double getLow() { return this.low; }
     public double getOpen() { return this.open; }
     public double getVolume() { return this.volume; }
-    public double getPrice() { return (this.getHigh() + this.getClose() + this.getLow())/3; }
+    public double getPrice() { return (this.getHigh() + this.getClose() + this.getLow() + this.getOpen())/4; }
 
     public double getVWAP(double prevPV, double prevV) {
         double pv = getPrice()*getVolume();

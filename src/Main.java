@@ -9,10 +9,21 @@ public class Main {
     public static ArrayList<Double> prices = new ArrayList<>();
     public static ArrayList<Double> VWPAPs = new ArrayList<>();
     public static ArrayList<Integer> time = new ArrayList<>();
+    private static String TICKER = "SPY";
 
     public static void main(String[] args) throws IOException {
 	// write your code here
-        String TICKER = "SPY";
+        loadData();
+
+        Graph chart = new Graph (
+                "Savant Analytics" ,
+                TICKER + " Price v. VWAP");
+        chart.pack( );
+        RefineryUtilities.centerFrameOnScreen( chart );
+        chart.setVisible( true );
+    }
+
+    public static void loadData() throws IOException {
         URL stockURL = new URL("http://chartapi.finance.yahoo.com/instrument/1.0/" + TICKER +"/chartdata;type=quote;range=1d/csv");
         BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
 
@@ -39,12 +50,5 @@ public class Main {
             pv+=s.getPrice()*s.getVolume();
             v+=s.getVolume();
         }
-
-        Graph chart = new Graph (
-                "Savant Analytics" ,
-                TICKER + " Price v. VWAP");
-        chart.pack( );
-        RefineryUtilities.centerFrameOnScreen( chart );
-        chart.setVisible( true );
     }
 }

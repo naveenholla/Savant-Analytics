@@ -8,13 +8,19 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class Graph extends ApplicationFrame
+public class Graph extends ApplicationFrame implements ActionListener
 {
+    private ChartPanel chartPanel;
+
     public Graph( String applicationTitle , String chartTitle )
     {
         super(applicationTitle);
@@ -26,12 +32,14 @@ public class Graph extends ApplicationFrame
                 PlotOrientation.VERTICAL,
                 true,true,false);
 
-        ChartPanel chartPanel = new ChartPanel( VWAPlineChart );
+        chartPanel = new ChartPanel( VWAPlineChart );
 
         chartPanel.setMinimumDrawHeight(799);
         chartPanel.setMaximumDrawHeight(804);
         chartPanel.setPreferredSize( new java.awt.Dimension( 1000 , 900 ) );
         setContentPane( chartPanel );
+
+        //chartPanel.repaint();
     }
 
     private DefaultCategoryDataset createVWAPDataset( )
@@ -60,5 +68,11 @@ public class Graph extends ApplicationFrame
         }
 
         return dataset;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        try { Main.loadData(); }
+        catch (IOException d) {}
+        chartPanel.repaint();
     }
 }
