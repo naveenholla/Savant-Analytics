@@ -10,5 +10,8 @@
     <orderEntry type="library" name="com.yahoofinance-api:YahooFinanceAPI:3.0.0" level="project" />
     <orderEntry type="library" name="net.sf.opencsv:opencsv:2.3" level="project" />
     <orderEntry type="library" name="org.jfree:jfreechart:1.0.18" level="project" />
+    <orderEntry type="library" name="org.deeplearning4j:deeplearning4j-core:0.7.2" level="project" />
+    <orderEntry type="library" name="org.nd4j:nd4j-native-platform:0.7.2" level="project" />
+    <orderEntry type="library" name="org.datavec:datavec-api:0.7.2" level="project" />
   </component>
 </module>
