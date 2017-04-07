@@ -1,4 +1,7 @@
+package savant;
+
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 import org.jfree.ui.RefineryUtilities;
 import java.io.*;
 import java.net.URL;
@@ -9,13 +12,14 @@ public class Main {
     public static ArrayList<Double> prices = new ArrayList<>();
     public static ArrayList<Double> VWPAPs = new ArrayList<>();
     public static ArrayList<Integer> time = new ArrayList<>();
-    private static String TICKER = "TSLA";
+
+    private static String TICKER = "SPY";
 
     public static void main(String[] args) throws IOException {
 	// write your code here
         loadData();
 
-        Graph chart = new Graph (
+        Graph chart = new Graph(
                 "Savant Analytics" ,
                 TICKER + " Price v. VWAP");
         chart.pack( );
@@ -38,19 +42,22 @@ public class Main {
 
         double pv = 0;
         double v = 0;
-
         double cp=0;
 
         for(Stock s : stocks) {
-            if(s.getPrice()>cp) System.out.println("Actual: Trend up\n");
-            else if(s.getPrice()<cp) System.out.println("Actual: Trend down\n");
+            if(s.getPrice()>cp) {
+                System.out.println("Actual: Trend up\n");
+                s.setStatus(true);
+            }
+            else if(s.getPrice()<cp) {
+                System.out.println("Actual: Trend down\n");
+                s.setStatus(false);
+            }
 
             System.out.println(s.getPrice() + "     " + s.getVWAP(pv, v));
             prices.add(s.getPrice());
             VWPAPs.add(s.getVWAP(pv,v));
             time.add(s.getTimestamp());
-
-
 
             if(s.getVWAP(pv, v)<s.getPrice()) {
                 System.out.println("Prediction: Trend Up\n");
@@ -64,5 +71,28 @@ public class Main {
             pv+=s.getPrice()*s.getVolume();
             v+=s.getVolume();
         }
+
+        BufferedWriter out = new BufferedWriter(new FileWriter("in/stock_train.csv"));
+        CSVWriter cw = new CSVWriter(out);
+        String[] arr = new String[5];
+        arr[0] = "time";
+        arr[1] = "price";
+        arr[2] = "vwap";
+        //arr[3] = "twap";
+        arr[3] = "true/false";
+
+        cw.writeNext(arr);
+
+        for(Stock s : stocks) {
+            String[] temp = new String[4];
+            temp[0] = Integer.toString(s.getTimestamp());
+            temp[1] = Double.toString(s.getPrice());
+            temp[2] = Double.toString(s.getVWAP(pv,v));
+            //temp[3] = Double.toString(s.getVWAPX());
+            temp[3] = Boolean.toString(s.getStatus());
+            cw.writeNext(temp);
+        }
+
+        cw.close();
     }
 }
