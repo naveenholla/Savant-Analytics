@@ -17,15 +17,17 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 	// write your code here
-        loadData();
-
-        Graph chart = new Graph(
-                "Savant Analytics" ,
-                TICKER + " Price v. VWAP");
-
-        chart.pack( );
-        RefineryUtilities.centerFrameOnScreen( chart );
-        chart.setVisible( true );
+//        loadData();
+//
+//        Graph chart = new Graph(
+//                "Savant Analytics" ,
+//                TICKER + " Price v. VWAP");
+//
+//        chart.pack( );
+//        RefineryUtilities.centerFrameOnScreen( chart );
+//        chart.setVisible( true );
+        NeuralNet n = new NeuralNet();
+        n.runNetwork();
     }
 
     public static void loadData() throws IOException {
@@ -41,7 +43,7 @@ public class Main {
         ArrayList<Stock> stocks = new ArrayList<>();
         while ((nextLine = reader.readNext()) != null) {
             count++;
-            if(count>=18) stocks.add(new Stock(Integer.parseInt(nextLine[0]), Double.parseDouble(nextLine[1]), Double.parseDouble(nextLine[2]), Double.parseDouble(nextLine[3]), Double.parseDouble(nextLine[4]), Double.parseDouble(nextLine[4])));
+            if(count>=20) stocks.add(new Stock(Integer.parseInt(nextLine[0]), Double.parseDouble(nextLine[1]), Double.parseDouble(nextLine[2]), Double.parseDouble(nextLine[3]), Double.parseDouble(nextLine[4]), Double.parseDouble(nextLine[4])));
         }
 
         double pv = 0;
@@ -78,14 +80,14 @@ public class Main {
             pp=s.getPrice();
         }
 
-        BufferedWriter out = new BufferedWriter(new FileWriter("in/stock_train.csv"));
+        BufferedWriter out = new BufferedWriter(new FileWriter("in/stock_test.csv"));
         CSVWriter cw = new CSVWriter(out);
-        String[] arr = new String[5];
+        String[] arr = new String[4];
         arr[0] = "time";
         arr[1] = "price";
         arr[2] = "vwap";
         arr[3] = "twap";
-        arr[4] = "true/false";
+        //arr[4] = "true/false";
 
         cw.writeNext(arr);
         int c = 0;
@@ -97,7 +99,7 @@ public class Main {
             temp[1] = Double.toString(s.getPrice());
             temp[2] = Double.toString(s.getVWAP(pv,v));
             temp[3] = Double.toString(s.getTWAP(prev, c));
-            temp[4] = Boolean.toString(s.getStatus());
+            //temp[4] = Boolean.toString(s.getStatus());
             prev = s.getTWAP(prev, c);
             c++;
             cw.writeNext(temp);
