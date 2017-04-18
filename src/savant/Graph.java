@@ -7,9 +7,11 @@ package savant;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.chart.axis.NumberAxis;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,6 +36,7 @@ public class Graph extends ApplicationFrame implements ActionListener
                 PlotOrientation.VERTICAL,
                 true,true,false);
 
+
         chartPanel = new ChartPanel( VWAPlineChart );
 
         chartPanel.setMinimumDrawHeight(799);
@@ -41,7 +44,6 @@ public class Graph extends ApplicationFrame implements ActionListener
         chartPanel.setPreferredSize( new java.awt.Dimension( 1000 , 900 ) );
         setContentPane( chartPanel );
 
-        //chartPanel.repaint();
     }
 
     private DefaultCategoryDataset createVWAPDataset( )

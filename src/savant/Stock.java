@@ -7,7 +7,7 @@ package savant;
 public class Stock {
     private int timestamp;
     private double close, high, low ,open, volume;
-    private double VWAP;
+    private double VWAP, TWAP;
     private boolean wentUp;
 
     public Stock(int t, double c, double h, double l ,double o, double v) {
@@ -17,6 +17,7 @@ public class Stock {
         this.open = o;
         this.low = l;
         this.volume = v;
+        //this.TWAP = getPrice();
     }
 
     public int getTimestamp() { return this.timestamp; }
@@ -34,7 +35,16 @@ public class Stock {
         return x;
     }
 
-    public double getVWAPX() { return VWAP; }
+    public double getTWAP(double prev, int num) {
+        double sum = prev + getPrice();
+        if(num<1) {
+            this.TWAP = sum;
+            return this.TWAP;
+        } else {
+            this.TWAP = sum / 2;
+            return this.TWAP;
+        }
+    }
 
     public void setStatus(boolean wentUp) {
         this.wentUp = wentUp;

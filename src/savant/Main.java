@@ -13,7 +13,7 @@ public class Main {
     public static ArrayList<Double> VWPAPs = new ArrayList<>();
     public static ArrayList<Integer> time = new ArrayList<>();
 
-    private static String TICKER = "SPY";
+    private static String TICKER = "TSLA";
 
     public static void main(String[] args) throws IOException {
 	// write your code here
@@ -22,17 +22,21 @@ public class Main {
         Graph chart = new Graph(
                 "Savant Analytics" ,
                 TICKER + " Price v. VWAP");
+
         chart.pack( );
         RefineryUtilities.centerFrameOnScreen( chart );
         chart.setVisible( true );
     }
 
     public static void loadData() throws IOException {
-        URL stockURL = new URL("http://chartapi.finance.yahoo.com/instrument/1.0/" + TICKER +"/chartdata;type=quote;range=1d/csv");
-        BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
+        URL stockURL = new URL("http://chartapi.finance.yahoo.com/instrument/1.0/TSLA/chartdata;type=quote;range=1d/csv");
+        //BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
 
-        CSVReader reader = new CSVReader(in);
-        String [] nextLine;
+        /* Fix Code Here */
+
+        CSVReader reader = new CSVReader(new FileReader("in/yahoo.csv"));
+        String[] nextLine;
+
         int count=0;
         ArrayList<Stock> stocks = new ArrayList<>();
         while ((nextLine = reader.readNext()) != null) {
@@ -43,6 +47,7 @@ public class Main {
         double pv = 0;
         double v = 0;
         double cp=0;
+        double pp = 0;
 
         for(Stock s : stocks) {
             if(s.getPrice()>cp) {
@@ -70,6 +75,7 @@ public class Main {
 
             pv+=s.getPrice()*s.getVolume();
             v+=s.getVolume();
+            pp=s.getPrice();
         }
 
         BufferedWriter out = new BufferedWriter(new FileWriter("in/stock_train.csv"));
@@ -78,18 +84,22 @@ public class Main {
         arr[0] = "time";
         arr[1] = "price";
         arr[2] = "vwap";
-        //arr[3] = "twap";
-        arr[3] = "true/false";
+        arr[3] = "twap";
+        arr[4] = "true/false";
 
         cw.writeNext(arr);
+        int c = 0;
+        double prev = 0;
 
         for(Stock s : stocks) {
-            String[] temp = new String[4];
+            String[] temp = new String[5];
             temp[0] = Integer.toString(s.getTimestamp());
             temp[1] = Double.toString(s.getPrice());
             temp[2] = Double.toString(s.getVWAP(pv,v));
-            //temp[3] = Double.toString(s.getVWAPX());
-            temp[3] = Boolean.toString(s.getStatus());
+            temp[3] = Double.toString(s.getTWAP(prev, c));
+            temp[4] = Boolean.toString(s.getStatus());
+            prev = s.getTWAP(prev, c);
+            c++;
             cw.writeNext(temp);
         }
 
