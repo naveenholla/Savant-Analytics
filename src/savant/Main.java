@@ -3,6 +3,7 @@ package savant;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import org.jfree.ui.RefineryUtilities;
+
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -82,12 +83,12 @@ public class Main {
 
         BufferedWriter out = new BufferedWriter(new FileWriter("in/stock_test.csv"));
         CSVWriter cw = new CSVWriter(out);
-        String[] arr = new String[4];
+        String[] arr = new String[5];
         arr[0] = "time";
         arr[1] = "price";
         arr[2] = "vwap";
         arr[3] = "twap";
-        //arr[4] = "true/false";
+        arr[4] = "0";
 
         cw.writeNext(arr);
         int c = 0;
@@ -99,7 +100,7 @@ public class Main {
             temp[1] = Double.toString(s.getPrice());
             temp[2] = Double.toString(s.getVWAP(pv,v));
             temp[3] = Double.toString(s.getTWAP(prev, c));
-            //temp[4] = Boolean.toString(s.getStatus());
+            temp[4] = "0";
             prev = s.getTWAP(prev, c);
             c++;
             cw.writeNext(temp);
