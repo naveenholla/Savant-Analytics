@@ -90,9 +90,8 @@ public class Main {
         temp[1] = Double.toString(b.getPrice());
         temp[2] = Double.toString(b.getVWAP(pv,v));
         temp[3] = Integer.toString(0);
+
         cw.writeNext(temp);
-
-
         cw.close();
 
         pv=v=cp=pp=0;
@@ -129,7 +128,7 @@ public class Main {
 
         CSVWriter cd = new CSVWriter(new FileWriter("src/in/stock_train.csv"), ',', CSVWriter.NO_QUOTE_CHARACTER);
 
-        for(int g=0; g<stocks2.size()-1; g++) {
+        for(int g=0; g<stocks2.size(); g++) {
             Stock q = stocks2.get(g);
             String[] temp2 = new String[4];
             if(q.getTimestamp().startsWith("a")) continue;

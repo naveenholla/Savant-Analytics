@@ -60,7 +60,7 @@ public class NeuralNet {
                     .iterations(iterations)
                     .activation(Activation.TANH)
                     .weightInit(WeightInit.XAVIER)
-                    .learningRate(0.12)
+                    .learningRate(0.1)
                     .regularization(true).l2(1e-4)
                     .list()
                     .layer(0, new DenseLayer.Builder().nIn(numInputs).nOut(2).build())
