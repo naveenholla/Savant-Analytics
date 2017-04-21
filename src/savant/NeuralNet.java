@@ -30,7 +30,6 @@ import java.util.Map;
  */
 
 public class NeuralNet {
-    private static Map<Integer, String> classifiers = new HashMap<>();
 
     public void runNetwork() {
 
