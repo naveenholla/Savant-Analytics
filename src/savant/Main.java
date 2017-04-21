@@ -126,27 +126,19 @@ public class Main {
             pp=s.getPrice();
         }
 
-        //BufferedWriter out = new BufferedWriter();
 
         CSVWriter cd = new CSVWriter(new FileWriter("src/in/stock_train.csv"), ',', CSVWriter.NO_QUOTE_CHARACTER);
-        int r=0;
-        int dd=0;
 
-        for(int g=0; g<stocks2.size(); g++) {
+        for(int g=0; g<stocks2.size()-1; g++) {
             Stock q = stocks2.get(g);
             String[] temp2 = new String[4];
-            if(q.getTimestamp().startsWith("a")) {
-                dd++;
-                break;
-            }
+            if(q.getTimestamp().startsWith("a")) continue;
 
             temp2[0] = q.getTimestamp();
             temp2[1] = Double.toString(q.getPrice());
             temp2[2] = Double.toString(q.getVWAP(pv,v));
             temp2[3] = Integer.toString(q.getStatus());
-            r++;
 
-            System.out.println(g + " " + temp2);
             cd.writeNext(temp2);
         }
 
