@@ -44,11 +44,11 @@ public class Main {
         while ((nextLine = reader.readNext()) != null) {
             count++;
 
-            if(count>=9) {stocks.add(new Stock(nextLine[0], Double.parseDouble(nextLine[1]), Double.parseDouble(nextLine[2]), Double.parseDouble(nextLine[3]), Double.parseDouble(nextLine[4]), Double.parseDouble(nextLine[4])));
+            if(count>=9) {stocks.add(new Stock(nextLine[0], Double.parseDouble(nextLine[1]), Double.parseDouble(nextLine[2]), Double.parseDouble(nextLine[3]), Double.parseDouble(nextLine[4]), Double.parseDouble(nextLine[5])));
             }
         }
 
-        URL trainingStockURL = new URL("https://www.google.com/finance/getprices?i=60&p=15d&f=d,o,h,l,c,v&df=cpct&q="+ TICKER);
+        URL trainingStockURL = new URL("https://www.google.com/finance/getprices?i=30&p=15d&f=d,o,h,l,c,v&df=cpct&q="+ TICKER);
         BufferedReader in2 = new BufferedReader(new InputStreamReader(trainingStockURL.openStream()));
 
         CSVReader reader2 = new CSVReader(in2);
@@ -60,7 +60,7 @@ public class Main {
             count2++;
 
             if(count2>=9) {
-                stocks2.add(new Stock(nextLine2[0], Double.parseDouble(nextLine2[1]), Double.parseDouble(nextLine2[2]), Double.parseDouble(nextLine2[3]), Double.parseDouble(nextLine2[4]), Double.parseDouble(nextLine2[4])));
+                stocks2.add(new Stock(nextLine2[0], Double.parseDouble(nextLine2[1]), Double.parseDouble(nextLine2[2]), Double.parseDouble(nextLine2[3]), Double.parseDouble(nextLine2[4]), Double.parseDouble(nextLine2[5])));
             }
         }
 
@@ -129,14 +129,24 @@ public class Main {
         //BufferedWriter out = new BufferedWriter();
 
         CSVWriter cd = new CSVWriter(new FileWriter("src/in/stock_train.csv"), ',', CSVWriter.NO_QUOTE_CHARACTER);
+        int r=0;
+        int dd=0;
 
-        for(Stock s : stocks2) {
+        for(int g=0; g<stocks2.size(); g++) {
+            Stock q = stocks2.get(g);
             String[] temp2 = new String[4];
-            if(s.getTimestamp().startsWith("a")) break;
-            temp2[0] = s.getTimestamp();
-            temp2[1] = Double.toString(s.getPrice());
-            temp2[2] = Double.toString(s.getVWAP(pv,v));
-            temp2[3] = Integer.toString(s.getStatus());
+            if(q.getTimestamp().startsWith("a")) {
+                dd++;
+                break;
+            }
+
+            temp2[0] = q.getTimestamp();
+            temp2[1] = Double.toString(q.getPrice());
+            temp2[2] = Double.toString(q.getVWAP(pv,v));
+            temp2[3] = Integer.toString(q.getStatus());
+            r++;
+
+            System.out.println(g + " " + temp2);
             cd.writeNext(temp2);
         }
 
