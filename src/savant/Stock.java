@@ -5,22 +5,21 @@ package savant;
  */
 
 public class Stock {
-    private int timestamp;
+    private String timestamp;
     private double close, high, low ,open, volume;
-    private double VWAP, TWAP;
+    private double VWAP;
     private boolean wentUp;
 
-    public Stock(int t, double c, double h, double l ,double o, double v) {
+    public Stock(String t, double c, double h, double l ,double o, double v) {
         this.timestamp = t;
         this.close = c;
         this.high = h;
         this.open = o;
         this.low = l;
         this.volume = v;
-        //this.TWAP = getPrice();
     }
 
-    public int getTimestamp() { return this.timestamp; }
+    public String getTimestamp() { return this.timestamp; }
     public double getHigh() { return this.high; }
     public double getClose() { return this.close; }
     public double getLow() { return this.low; }
@@ -35,22 +34,12 @@ public class Stock {
         return x;
     }
 
-    public double getTWAP(double prev, int num) {
-        double sum = prev + getPrice();
-        if(num<1) {
-            this.TWAP = sum;
-            return this.TWAP;
-        } else {
-            this.TWAP = sum / 2;
-            return this.TWAP;
-        }
-    }
-
     public void setStatus(boolean wentUp) {
         this.wentUp = wentUp;
     }
 
-    public boolean getStatus() {
-        return wentUp;
+    public int getStatus() {
+        if(this.wentUp) return 1;
+        else return 0;
     }
 }

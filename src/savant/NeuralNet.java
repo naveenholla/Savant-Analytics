@@ -35,12 +35,13 @@ public class NeuralNet {
 
         try {
 
-            int labelIndex = 4;
+            int labelIndex = 3;
             int numClasses = 2;
-            int batchSizeTraining = 391;
+            int batchSizeTraining = 5472;
+            int batchSizeTest = 1;
 
             DataSet training = readCSVDataSet("/in/stock_train.csv", batchSizeTraining, labelIndex, numClasses);
-            DataSet testing = readCSVDataSet("/in/stock_test.csv", batchSizeTraining, labelIndex, numClasses);
+            DataSet testing = readCSVDataSet("/in/stock_test.csv", batchSizeTest, labelIndex, numClasses);
 
             Map<Integer, Map<String, Object>> stocks = makeStocksForTesting(testing);
 
@@ -49,9 +50,9 @@ public class NeuralNet {
             normalizer.transform(training);
             normalizer.transform(testing);
 
-            final int numInputs = 4;
+            final int numInputs = 3;
             int outputNum = 2;
-            int iterations = 500;
+            int iterations = 10000;
             long seed = 6;
 
             MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
@@ -59,13 +60,13 @@ public class NeuralNet {
                     .iterations(iterations)
                     .activation(Activation.TANH)
                     .weightInit(WeightInit.XAVIER)
-                    .learningRate(0.015)
+                    .learningRate(0.12)
                     .regularization(true).l2(1e-4)
                     .list()
-                    .layer(0, new DenseLayer.Builder().nIn(numInputs).nOut(3).build())
-                    .layer(1, new DenseLayer.Builder().nIn(3).nOut(3).build())
+                    .layer(0, new DenseLayer.Builder().nIn(numInputs).nOut(2).build())
+                    .layer(1, new DenseLayer.Builder().nIn(2).nOut(2).build())
                     .layer(2, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
-                            .activation(Activation.SOFTMAX).nIn(3).nOut(outputNum).build())
+                            .activation(Activation.SOFTMAX).nIn(2).nOut(outputNum).build())
                     .backprop(true).pretrain(false)
                     .build();
 
@@ -88,8 +89,8 @@ public class NeuralNet {
 
     }
 
-    public static void logStocks(Map<Integer,Map<String,Object>> animals){
-        for(Map<String,Object> a:animals.values())
+    public static void logStocks(Map<Integer,Map<String,Object>> stocks){
+        for(Map<String,Object> a:stocks.values())
             System.out.println(a.toString());
     }
 
@@ -100,6 +101,8 @@ public class NeuralNet {
             float max=0;
             int classifier=0;
             float[] arr = new float[2];
+            System.out.println(output.slice(i));
+
             for(int j=0; j<output.slice(i).length(); j++) {
                 float pp = output.slice(i).getColumn(j).getFloat(0);
                 arr[j]=pp;
@@ -122,25 +125,6 @@ public class NeuralNet {
 
     }
 
-    public static float[] getFloatArrayFromSlice(INDArray rowSlice){
-        float[] result = new float[rowSlice.columns()];
-        for (int i = 0; i < rowSlice.columns(); i++) {
-            result[i] = rowSlice.getFloat(i);
-        }
-        return result;
-    }
-
-    public static int maxIndex(float[] vals){
-        int maxIndex = 0;
-        for (int i = 1; i < vals.length; i++){
-            float newnumber = vals[i];
-            if ((newnumber > vals[maxIndex])){
-                maxIndex = i;
-            }
-        }
-        return maxIndex;
-    }
-
     public static Map<Integer, Map<String, Object>> makeStocksForTesting(DataSet test) {
         Map<Integer, Map<String, Object>> stocks = new HashMap<>();
         INDArray features = test.getFeatureMatrix();
@@ -151,7 +135,6 @@ public class NeuralNet {
             // setting attributes
             stock.put("price", slice.getDouble(1));
             stock.put("vwap", slice.getDouble(2));
-            stock.put("twap", slice.getDouble(3));
 
             stocks.put(i, stock);
         }

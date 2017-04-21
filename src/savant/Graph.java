@@ -21,7 +21,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class Graph extends ApplicationFrame implements ActionListener
+public class Graph extends ApplicationFrame
 {
     private ChartPanel chartPanel;
 
@@ -74,9 +74,4 @@ public class Graph extends ApplicationFrame implements ActionListener
         return dataset;
     }
 
-    public void actionPerformed(ActionEvent e) {
-        try { Main.loadData(); }
-        catch (IOException d) {}
-        chartPanel.repaint();
-    }
 }
