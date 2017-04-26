@@ -1,5 +1,6 @@
 package savant;
 
+import au.com.bytecode.opencsv.CSVReader;
 import org.datavec.api.records.reader.RecordReader;
 import org.datavec.api.records.reader.impl.csv.CSVRecordReader;
 import org.datavec.api.split.FileSplit;
@@ -21,9 +22,11 @@ import org.nd4j.linalg.dataset.api.preprocessor.DataNormalization;
 import org.nd4j.linalg.dataset.api.preprocessor.NormalizerStandardize;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Created by Arnav_Gudibande on 3/8/17.
@@ -53,7 +56,7 @@ public class NeuralNet {
             final int numInputs = 3;
             int outputNum = 2;
             int iterations = 10000;
-            long seed = 6;
+            long seed = 2;
 
             MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
                     .seed(seed)

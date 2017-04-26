@@ -42,4 +42,12 @@ public class Stock {
         if(this.wentUp) return 1;
         else return 0;
     }
+
+    public void setVWAP(double VWAP) {
+        this.VWAP = VWAP;
+    }
+
+    public double getRealVWAP() {
+        return this.VWAP;
+    }
 }
