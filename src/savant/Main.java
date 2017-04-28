@@ -15,7 +15,7 @@ public class Main {
     public static ArrayList<Double> VWPAPs = new ArrayList<>();
     public static ArrayList<String> time = new ArrayList<>();
 
-    private static String TICKER = "TSLA";
+    private static String TICKER = "AMZN";
 
     public static void main(String[] args) throws IOException {
 	// write your code here
@@ -103,11 +103,11 @@ public class Main {
         for(int i=1; i<stocks2.size()-1; i++) {
             Stock s = stocks2.get(i);
             if(s.getPrice()>cp && VWAPup) {
-                System.out.println("Actual: Trend up\n");
+                //System.out.println("Actual: Trend up\n");
                 stocks2.get(i-1).setStatus(true); // indicators worked!
             }
             else if(s.getPrice()<cp && !VWAPup) {
-                System.out.println("Actual: Trend down\n");
+                //System.out.println("Actual: Trend down\n");
                 stocks2.get(i-1).setStatus(true); // indicator worked!!!
             }
 
@@ -117,15 +117,15 @@ public class Main {
 
             double vwap = s.getVWAP(pv,v);
 
-            System.out.println(s.getPrice() + "     " + vwap);
+            //System.out.println(s.getPrice() + "     " + vwap);
 
             if(vwap<s.getPrice()) {
-                System.out.println("Prediction: Trend Up\n");
+                //System.out.println("Prediction: Trend Up\n");
                 cp = s.getPrice();
                 VWAPup = true;
             }
             else {
-                System.out.println("Prediction: Trend down\n");
+                //System.out.println("Prediction: Trend down\n");
                 cp = s.getPrice();
                 VWAPup = false;
             }
