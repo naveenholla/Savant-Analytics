@@ -55,8 +55,8 @@ public class NeuralNet {
 
             final int numInputs = 3;
             int outputNum = 2;
-            int iterations = 10000;
-            long seed = 2;
+            int iterations = 5000;
+            long seed = 6;
 
             MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
                     .seed(seed)

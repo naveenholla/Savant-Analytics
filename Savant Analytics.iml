@@ -14,5 +14,6 @@
     <orderEntry type="library" name="org.nd4j:nd4j-native-platform:0.7.2" level="project" />
     <orderEntry type="library" name="org.datavec:datavec-api:0.7.2" level="project" />
     <orderEntry type="library" name="Simple Logging Facade for Java:1.7.25" level="project" />
+    <orderEntry type="library" name="org.json:json:20160810" level="project" />
   </component>
 </module>

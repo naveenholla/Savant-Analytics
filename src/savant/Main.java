@@ -6,8 +6,10 @@ import org.jfree.ui.RefineryUtilities;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.json.*;
 
 public class Main {
 
@@ -15,10 +17,13 @@ public class Main {
     public static ArrayList<Double> VWPAPs = new ArrayList<>();
     public static ArrayList<String> time = new ArrayList<>();
 
-    private static String TICKER = "AMZN";
+    private static String TICKER = "SBUX";
 
     public static void main(String[] args) throws IOException {
 	// write your code here
+        Frame frame = new Frame("Savant Analytics", 1000, 1000);
+        frame.drawScene();
+
         loadData();
 
         Graph chart = new Graph(
@@ -29,11 +34,43 @@ public class Main {
         RefineryUtilities.centerFrameOnScreen( chart );
         chart.setVisible( true );
 
+
+
         NeuralNet n = new NeuralNet();
         n.runNetwork();
+
+        loadCurrentData();
     }
 
-    public static void loadData() throws IOException {
+    private static void loadCurrentData() throws IOException {
+        JSONObject obj = readJsonFromUrl("http://finance.google.com/finance/info?client=ig&q=NASDAQ:" + TICKER);
+        String currentStock = obj.getString("t");
+        System.out.println(currentStock);
+    }
+
+    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+        InputStream is = new URL(url).openStream();
+        try {
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            String jsonText = readAll(rd);
+            jsonText = jsonText.replace("// ", "");
+            jsonText = jsonText.replace("[", "").replace("]", "");
+            JSONObject json = new JSONObject(jsonText);
+            return json;
+        } finally { is.close(); }
+    }
+
+    private static String readAll(Reader rd) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = rd.read()) != -1) {
+            sb.append((char) cp);
+        }
+        return sb.toString();
+    }
+
+    private static void loadData() throws IOException {
         URL currentStockURL = new URL("https://www.google.com/finance/getprices?i=30&p=1d&f=d,o,h,l,c,v&df=cpct&q="+ TICKER);
         BufferedReader in = new BufferedReader(new InputStreamReader(currentStockURL.openStream()));
 
