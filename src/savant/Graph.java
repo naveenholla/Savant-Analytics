@@ -36,13 +36,16 @@ public class Graph extends ApplicationFrame
                 PlotOrientation.VERTICAL,
                 true,true,false);
 
-
         chartPanel = new ChartPanel( VWAPlineChart );
+        chartPanel.restoreAutoRangeBounds();
 
         chartPanel.setMinimumDrawHeight(799);
         chartPanel.setMaximumDrawHeight(804);
         chartPanel.setPreferredSize( new java.awt.Dimension( 1000 , 900 ) );
         setContentPane( chartPanel );
+
+        Frame.basePanel.add(chartPanel);
+        Frame.frame.setVisible(true);
 
     }
 

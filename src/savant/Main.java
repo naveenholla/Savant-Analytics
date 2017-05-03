@@ -16,39 +16,41 @@ public class Main {
     public static ArrayList<Double> prices = new ArrayList<>();
     public static ArrayList<Double> VWPAPs = new ArrayList<>();
     public static ArrayList<String> time = new ArrayList<>();
+    public static JSONObject obj;
 
-    private static String TICKER = "SBUX";
+    public static String TICKER;
 
     public static void main(String[] args) throws IOException {
 	// write your code here
         Frame frame = new Frame("Savant Analytics", 1000, 1000);
         frame.drawScene();
-
-        loadData();
-
-        Graph chart = new Graph(
-                "Savant Analytics" ,
-                TICKER + " Price v. VWAP");
-
-        chart.pack( );
-        RefineryUtilities.centerFrameOnScreen( chart );
-        chart.setVisible( true );
-
-
-
-        NeuralNet n = new NeuralNet();
-        n.runNetwork();
-
-        loadCurrentData();
     }
 
-    private static void loadCurrentData() throws IOException {
-        JSONObject obj = readJsonFromUrl("http://finance.google.com/finance/info?client=ig&q=NASDAQ:" + TICKER);
-        String currentStock = obj.getString("t");
-        System.out.println(currentStock);
+    public static void loadCurrentData() throws IOException {
+        obj = readJsonFromUrl("http://finance.google.com/finance/info?client=ig&q=NASDAQ:" + TICKER);
     }
 
-    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+    public static String loadPrice() throws IOException {
+        String price = obj.getString("l");
+        return price;
+    }
+
+    public static String loadExchange() throws IOException {
+        String e = obj.getString("e");
+        return e;
+    }
+
+    public static String loadTime() throws IOException {
+        String time = obj.getString("ltt");
+        return time;
+    }
+
+    public static String loadTrend() throws IOException {
+        String trend = obj.getString("c");
+        return trend.substring(0,1) + " $" + trend.substring(1);
+    }
+
+    private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
         InputStream is = new URL(url).openStream();
         try {
 
@@ -70,7 +72,7 @@ public class Main {
         return sb.toString();
     }
 
-    private static void loadData() throws IOException {
+    public static void loadData() throws IOException {
         URL currentStockURL = new URL("https://www.google.com/finance/getprices?i=30&p=1d&f=d,o,h,l,c,v&df=cpct&q="+ TICKER);
         BufferedReader in = new BufferedReader(new InputStreamReader(currentStockURL.openStream()));
 
