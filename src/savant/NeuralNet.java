@@ -43,8 +43,8 @@ public class NeuralNet {
             int batchSizeTraining = 5472;
             int batchSizeTest = 1;
 
-            DataSet training = readCSVDataSet("/in/stock_train.csv", batchSizeTraining, labelIndex, numClasses);
-            DataSet testing = readCSVDataSet("/in/stock_test.csv", batchSizeTest, labelIndex, numClasses);
+            DataSet training = readCSVDataSet("src/in/stock_train.csv", batchSizeTraining, labelIndex, numClasses);
+            DataSet testing = readCSVDataSet("src/in/stock_test.csv", batchSizeTest, labelIndex, numClasses);
 
             Map<Integer, Map<String, Object>> stocks = makeStocksForTesting(testing);
 
@@ -146,7 +146,8 @@ public class NeuralNet {
 
     private static DataSet readCSVDataSet(String path, int batchSize, int labelIndex, int numClasses) throws IOException, InterruptedException {
         RecordReader rr = new CSVRecordReader();
-        rr.initialize(new FileSplit(new ClassPathResource(path).getFile()));
+        File stock_train = new File(path);
+        rr.initialize(new FileSplit(stock_train));
         DataSetIterator iterator = new RecordReaderDataSetIterator(rr, batchSize, labelIndex,numClasses);
         return iterator.next();
     }

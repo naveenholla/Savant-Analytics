@@ -189,7 +189,7 @@ public class Frame implements ActionListener {
                         if(Main.loadTrend().substring(0,1).equals("+")) {
                             trend.setForeground(new Color(0, 137, 53));
                         } else {
-                            trend.setForeground(new Color(137, 23, 101));
+                            trend.setForeground(new Color(137, 2, 10));
                         }
                     } catch (Exception q) {
                         System.out.println(q);

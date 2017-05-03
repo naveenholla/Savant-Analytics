@@ -135,7 +135,7 @@ public class Main {
         System.out.println(Arrays.toString(temp));
         cw.writeNext(temp);
         cw.close();
-        cw.close();
+
 
         pv=v=cp=pp=0;
 
