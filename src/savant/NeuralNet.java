@@ -56,7 +56,7 @@ public class NeuralNet {
             final int numInputs = 3;
             int outputNum = 2;
             int iterations = 5000;
-            long seed = 6;
+            long seed = 3;
 
             MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
                     .seed(seed)
@@ -70,7 +70,7 @@ public class NeuralNet {
                     .layer(1, new DenseLayer.Builder().nIn(2).nOut(2).build())
                     .layer(2, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
                             .activation(Activation.SOFTMAX).nIn(2).nOut(outputNum).build())
-                    .backprop(true).pretrain(false)
+                    .backprop(true).pretrain(true)
                     .build();
 
             MultiLayerNetwork model = new MultiLayerNetwork(conf);
