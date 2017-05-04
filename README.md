@@ -23,3 +23,9 @@ Meant primarily for day-trading, this passive system allows a trader to make a r
 
 
 More descriptive readme coming soon...
+
+# User Interface
+
+<img width="611" alt="screen shot 2017-05-03 at 9 51 53 pm" src="https://cloud.githubusercontent.com/assets/15108659/25691544/eb883db2-3050-11e7-854e-bdddb5c87db7.png">
+<img width="612" alt="screen shot 2017-05-03 at 9 52 05 pm" src="https://cloud.githubusercontent.com/assets/15108659/25691549/f281036a-3050-11e7-83be-2802d3825898.png">
+<img width="614" alt="screen shot 2017-05-03 at 9 52 34 pm" src="https://cloud.githubusercontent.com/assets/15108659/25691551/f5117d6c-3050-11e7-93c4-ac88e577deb1.png">
