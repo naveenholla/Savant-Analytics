@@ -34,6 +34,11 @@ import java.util.Scanner;
 
 public class NeuralNet {
 
+    public static String certainty = "";
+    public static boolean verdict;
+    public static double vwap = 0;
+    public static double price = 0;
+
     public void runNetwork() {
 
         try {
@@ -90,6 +95,7 @@ public class NeuralNet {
             e.printStackTrace();
         }
 
+
     }
 
     public static void logStocks(Map<Integer,Map<String,Object>> stocks){
@@ -124,6 +130,13 @@ public class NeuralNet {
                     classifier);
             System.out.println(classifier);
 
+            if(classifier == 1) {
+                certainty = Double.toString(output.slice(i).getDouble(1) * 100);
+                verdict = true;
+            } else if(classifier == 0) {
+                certainty = Double.toString(output.slice(i).getDouble(0) * 100);
+                verdict = false;
+            }
         }
 
     }
@@ -138,6 +151,9 @@ public class NeuralNet {
             // setting attributes
             stock.put("price", slice.getDouble(1));
             stock.put("vwap", slice.getDouble(2));
+
+            vwap = slice.getDouble(2);
+            price = slice.getDouble(1);
 
             stocks.put(i, stock);
         }

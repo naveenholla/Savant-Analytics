@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class Graph extends ApplicationFrame
 {
-    private ChartPanel chartPanel;
+    public static ChartPanel chartPanel;
 
     public Graph( String applicationTitle , String chartTitle )
     {
@@ -43,7 +43,6 @@ public class Graph extends ApplicationFrame
         chartPanel.setMaximumDrawHeight(804);
         chartPanel.setPreferredSize( new java.awt.Dimension( 1000 , 900 ) );
         setContentPane( chartPanel );
-
         Frame.basePanel.add(chartPanel);
         Frame.frame.setVisible(true);
 

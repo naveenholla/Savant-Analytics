@@ -4,6 +4,7 @@ package savant;
  * Created by Arnav_Gudibande on 4/29/17.
  */
 
+import org.jfree.chart.ChartPanel;
 import org.jfree.ui.RefineryUtilities;
 
 import javax.imageio.ImageIO;
@@ -19,26 +20,27 @@ import java.rmi.server.ExportException;
 public class Frame implements ActionListener {
 
     public static JFrame frame;
-    public static JPanel basePanel;
+    public static JPanel basePanel, topButtons, centerGrid, centerGrid3;
+    public static final JActivityIndicator act2 = new JActivityIndicator(1);
 
     public Frame(String title, int h, int w)
     {
         frame = new JFrame(title);
         frame.setSize(h,w);
-
     }
 
     public void drawScene()
     {
         basePanel = new JPanel();
+        //basePanel.setLayout(new BorderLayout());
         basePanel.setLayout(new BorderLayout());
         frame.add(basePanel);
         frame.setVisible(true);
 
-        JPanel topButtons = new JPanel();
+        topButtons = new JPanel();
 
 
-        JButton stock = new JButton("stock");
+        JButton stock = new JButton("Stock");
         topButtons.add(stock);
 
         JButton graphs = new JButton("Graphs");
@@ -47,6 +49,7 @@ public class Frame implements ActionListener {
         JButton analytics = new JButton("Analytics");
         topButtons.add(analytics);
         basePanel.add(topButtons, BorderLayout.NORTH);
+
         frame.setVisible(true);
 
         stock.addActionListener(this);
@@ -57,9 +60,18 @@ public class Frame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        if("stock".equals(command)){
 
-            JPanel centerGrid = new JPanel();
+        if("Stock".equals(command)){
+
+            if(Graph.chartPanel != null) {
+                Graph.chartPanel.setVisible(false);
+            }
+            if(centerGrid3 != null) {
+                centerGrid3.setVisible(false);
+            }
+
+
+            centerGrid = new JPanel();
             centerGrid.setLayout(new GridBagLayout());
             centerGrid.setBackground(new Color(217, 217, 217));
 
@@ -207,12 +219,17 @@ public class Frame implements ActionListener {
 
             textField.addActionListener( action );
 
-
             basePanel.add(centerGrid);
             frame.setVisible(true);
         }
 
         else if("Graphs".equals(command)){
+            if(centerGrid != null) {
+                centerGrid.setVisible(false);
+            }
+            if(centerGrid3 != null) {
+                centerGrid3.setVisible(false);
+            }
 
             JPanel jPanel1 = new JPanel();
             jPanel1.setLayout(new java.awt.BorderLayout());
@@ -224,31 +241,133 @@ public class Frame implements ActionListener {
 
         else if("Analytics".equals(command)){
 
-            JPanel centerGrid3 = new JPanel();
+            if(centerGrid != null) {
+                centerGrid.setVisible(false);
+            }
+            if(Graph.chartPanel != null) {
+                Graph.chartPanel.setVisible(false);
+            }
+
+            centerGrid3 = new JPanel();
             centerGrid3.setLayout(new GridBagLayout());
             centerGrid3.setBackground(new Color(217, 217, 217));
 
+            JButton analyze = new JButton("Run Network");
+
+            centerGrid3.add( analyze, new GridBagConstraints( 0, 0, 1, 1, 1.0,
+                    1.0, GridBagConstraints.NORTH, GridBagConstraints.NORTH,
+                    new Insets( 200, 0, 0, 0 ), 0, 0 ) );
+
+            centerGrid3.add( act2, new GridBagConstraints( 0, 0, 1, 1, 1.0,
+                    1.0, GridBagConstraints.NORTH, GridBagConstraints.NORTH,
+                    new Insets( 250, 0, 0, 0 ), 0, 0 ) );
+
+            act2.setVisible(false);
+
             try {
-                BufferedImage myPicture = ImageIO.read(new File("src/assets/savant.png"));
+                BufferedImage myPicture = ImageIO.read(new File("src/assets/analytics.png"));
                 JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 
                 centerGrid3.add( picLabel, new GridBagConstraints( 0, 0, 1, 1, 1.0,
-                        1.0, GridBagConstraints.NORTH, GridBagConstraints.NORTH,
-                        new Insets( 20, 0, 0, 0 ), 0, 0 ) );
+                        1.0, GridBagConstraints.NORTH, GridBagConstraints.NONE,
+                        new Insets( 50, 0, 0, 0 ), 0, 0 ) );
 
             } catch (IOException d) {
                 System.out.println(d);
             }
 
+            try {
+                BufferedImage myPicture = ImageIO.read(new File("src/assets/certainty.png"));
+                JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 
+                centerGrid3.add( picLabel, new GridBagConstraints( 0, 0, 1, 1, 1.0,
+                        1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                        new Insets( 0, 400, 0, 0 ), 0, 0 ) );
+
+            } catch (IOException d) {
+                System.out.println(d);
+            }
+
+            JLabel certainty = new JLabel("");
+            certainty.setFont(new Font("Serif", Font.PLAIN, 50));
+            certainty.setForeground(new Color(0, 46, 95));
+
+            centerGrid3.add( certainty, new GridBagConstraints( 0, 0, 1, 1, 1.0,
+                    1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                    new Insets( 125, 410, 0, 0 ), 0, 0 ) );
+
+            certainty.setVisible(false);
+
+            try {
+                BufferedImage myPicture = ImageIO.read(new File("src/assets/verdict.png"));
+                JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+
+                centerGrid3.add( picLabel, new GridBagConstraints( 0, 0, 1, 1, 1.0,
+                        1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                        new Insets( 0, 0, 0, 400 ), 0, 0 ) );
+
+            } catch (IOException d) {
+                System.out.println(d);
+            }
+
+            JLabel verdict = new JLabel("");
+            verdict.setFont(new Font("Serif", Font.PLAIN, 40));
+
+            centerGrid3.add( verdict, new GridBagConstraints( 0, 0, 1, 1, 1.0,
+                    1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                    new Insets( 125, 0, 0, 410 ), 0, 0 ) );
+
+            verdict.setVisible(false);
+
+            analyze.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    act2.setVisible(true);
+                    Thread one = new Thread() {
+                        public void run() {
+                            runNeuralNetwork();
+                            act2.toggleRotating();
+                            act2.setVisible(false);
+                            certainty.setText(NeuralNet.certainty.substring(0,4) + "%");
+                            certainty.setVisible(true);
+                            verdict.setText(determine(NeuralNet.price, NeuralNet.vwap, NeuralNet.verdict));
+
+                            if(verdict.getText().equals("BUY")) {
+                                verdict.setForeground(new Color(0, 137, 53));
+                            } else if (verdict.getText().equals("SELL")) {
+                                verdict.setForeground(new Color(137, 2, 10));
+                            } else {
+                                verdict.setForeground(new Color(0, 46, 95));
+                            }
+
+                            verdict.setVisible(true);
+                        }
+                    };
+
+                    one.start();
+                    act2.toggleRotating();
+                }
+            } );
 
             basePanel.add(centerGrid3);
             frame.setVisible(true);
 
-            NeuralNet n = new NeuralNet();
-            n.runNetwork();
+        }
+    }
 
+    public static void runNeuralNetwork() {
+        NeuralNet n = new NeuralNet();
+        n.runNetwork();
+    }
 
+    public static String determine(double p, double v, boolean verdict) {
+        if(verdict) {
+            if(v < p) {
+                return "BUY";
+            } else {
+                return "SELL";
+            }
+        } else {
+            return "HOLD";
         }
     }
 
