@@ -2,18 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="65708083-2f8a-465c-9850-cd1c3c48cfdc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/savant/JActivityIndicator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Savant Analytics/savant/Frame.class" afterPath="$PROJECT_DIR$/out/production/Savant Analytics/savant/Frame.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Savant Analytics/savant/Graph.class" afterPath="$PROJECT_DIR$/out/production/Savant Analytics/savant/Graph.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Savant Analytics/savant/NeuralNet.class" afterPath="$PROJECT_DIR$/out/production/Savant Analytics/savant/NeuralNet.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Savant Analytics/in/stock_test.csv" afterPath="$PROJECT_DIR$/out/production/Savant Analytics/in/stock_test.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Savant Analytics/in/stock_train.csv" afterPath="$PROJECT_DIR$/out/production/Savant Analytics/in/stock_train.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/in/stock_test.csv" afterPath="$PROJECT_DIR$/src/in/stock_test.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/in/stock_train.csv" afterPath="$PROJECT_DIR$/src/in/stock_train.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/savant/Frame.java" afterPath="$PROJECT_DIR$/src/savant/Frame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/savant/Graph.java" afterPath="$PROJECT_DIR$/src/savant/Graph.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/savant/NeuralNet.java" afterPath="$PROJECT_DIR$/src/savant/NeuralNet.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -831,11 +825,18 @@
       <option name="project" value="LOCAL" />
       <updated>1493794361937</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Version 1.0 Completed">
+      <created>1493873841107</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1493873841107</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92092000" />
+    <option name="totallyTimeSpent" value="92124000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -911,7 +912,8 @@
     <MESSAGE value="Neural Net Fully Functional" />
     <MESSAGE value="Neural Network Tuning" />
     <MESSAGE value="UI/UX Implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="UI/UX Implemented" />
+    <MESSAGE value="Version 1.0 Completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 1.0 Completed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
