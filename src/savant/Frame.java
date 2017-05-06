@@ -36,6 +36,7 @@ public class Frame implements ActionListener {
         basePanel.setLayout(new BorderLayout());
         frame.add(basePanel);
         frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         topButtons = new JPanel();
 

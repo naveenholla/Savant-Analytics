@@ -22,7 +22,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 	// write your code here
-        Frame frame = new Frame("Savant Analytics", 1000, 1000);
+        Frame frame = new Frame("Savant Analytics", 955, 700);
         frame.drawScene();
     }
 
@@ -73,7 +73,7 @@ public class Main {
     }
 
     public static void loadData() throws IOException {
-        URL currentStockURL = new URL("https://www.google.com/finance/getprices?i=30&p=1d&f=d,o,h,l,c,v&df=cpct&q="+ TICKER);
+        URL currentStockURL = new URL("https://www.google.com/finance/getprices?i=60&p=1d&f=d,o,h,l,c,v&df=cpct&q="+ TICKER);
         BufferedReader in = new BufferedReader(new InputStreamReader(currentStockURL.openStream()));
 
         CSVReader reader = new CSVReader(in);

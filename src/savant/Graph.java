@@ -54,9 +54,20 @@ public class Graph extends ApplicationFrame
         int c = 0;
         for(Double i: Main.VWPAPs) {
 
-            LocalDateTime dateTime = LocalDateTime.ofEpochSecond(Long.parseLong(Main.time.get(c).toString()), 0, ZoneOffset.UTC);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm", Locale.ENGLISH);
-            String formattedDate = dateTime.format(formatter);
+            int hours = (Integer.parseInt(Main.time.get(c))) / 60 + 6;
+            int minutes = (Integer.parseInt(Main.time.get(c)) % 60) + 30;
+
+            if(minutes >= 60) {
+                hours++;
+                minutes-=60;
+            }
+
+            if(hours>12) {
+                hours = 1;
+            }
+
+            String formattedDate = hours + ":" + minutes;
+            if(minutes<9) formattedDate+="0";
 
             dataset.addValue(i, "VWAP", formattedDate);
             c++;
@@ -65,9 +76,21 @@ public class Graph extends ApplicationFrame
         int d = 0;
         for(Double i: Main.prices) {
 
-            LocalDateTime dateTime = LocalDateTime.ofEpochSecond(Long.parseLong(Main.time.get(d).toString()), 0, ZoneOffset.UTC);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm", Locale.ENGLISH);
-            String formattedDate = dateTime.format(formatter);
+            int hours = (Integer.parseInt(Main.time.get(d))) / 60 + 6;
+            int minutes = (Integer.parseInt(Main.time.get(d)) % 60) + 30;
+
+            if(minutes >= 60) {
+                hours++;
+                minutes-=60;
+            }
+
+            if(hours>12) {
+                hours = 1;
+            }
+
+            String formattedDate = hours + ":" + minutes;
+            if(minutes<9) formattedDate+="0";
+
 
             dataset.addValue(i, "Price", formattedDate);
             d++;
